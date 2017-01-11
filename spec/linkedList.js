@@ -4,7 +4,8 @@ import LinkedList from '../src/linkedList'
 
 chai.use(chaiChange)
 
-describe.only('LinkedList', () => {
+describe('LinkedList', () => {
+
   'use strict'
 
   it('exists', () => {
@@ -24,8 +25,7 @@ describe.only('LinkedList', () => {
   context('insertFirst()', () => {
     it('inserts a node (with the provided data) to the head of the list', () => {
       const list = new LinkedList()
-
-
+      
       const insertedList = list.insert('A')
       const resultList = list.insertFirst('1')
 

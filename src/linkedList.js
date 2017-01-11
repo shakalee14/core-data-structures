@@ -52,7 +52,6 @@ export default class LinkedList {
     }
   }
 
-
   insert(value){
     let node = new Node(value)
     let currentNode = this._head
