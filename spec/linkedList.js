@@ -3,7 +3,6 @@ import chaiChange from 'chai-change'
 import LinkedList from '../src/linkedList'
 
 chai.use(chaiChange)
-// chai.use(chaiAsPromised)
 
 describe.only('LinkedList', () => {
   'use strict'
@@ -16,9 +15,19 @@ describe.only('LinkedList', () => {
     it('inserts a node (with the provided data) to the tail of the list', () => {
       const list = new LinkedList()
 
-      list.insert('A')
+      const insertedList = list.insert('A')
 
-      expect(list).to.have.lengthOf(1)
+      expect(insertedList).to.have.property('data', 'A')
+    })
+  })
+
+  context('insertFirst()', () => {
+    it('inserts a node (with the provided data) to the head of the list', () => {
+      const list = new LinkedList()
+
+      const insertedList = list.insert('A')
+
+      expect(insertedList).to.have.property('data', 'A')
     })
   })
 
@@ -26,11 +35,13 @@ describe.only('LinkedList', () => {
     it('returns the first node in the list', () => {
       const list = new LinkedList()
 
+      list.insert('S')
+      list.insert('H')
       list.insert('A')
-      list.insert('B')
-      list.insert('C')
+      list.insert('K')
+      list.insert('A')
 
-      expect(list.getHeadNode()).to.eql('A')
+      expect(list.getHeadNode()).to.have.property('data', 'S')
     })
   })
 
@@ -38,11 +49,13 @@ describe.only('LinkedList', () => {
     it('returns the last node in the list', () => {
       const list = new LinkedList()
 
+      list.insert('S')
+      list.insert('H')
       list.insert('A')
-      list.insert('B')
-      list.insert('C')
+      list.insert('K')
+      list.insert('A')
 
-      expect(list.getTailNode()).to.equal('C')
+      expect(list.getTailNode()).to.have.property('data', 'A')
     })
   })
 })

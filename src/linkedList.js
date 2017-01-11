@@ -1,7 +1,7 @@
 'use strict'
 
-function Node(data){
-  this.data = data;
+function Node(value){
+  this.data = value;
   this.next = null;
 }
 
@@ -10,28 +10,28 @@ export default class LinkedList {
   constructor() {
     this._length = 0
     this._head = null
-    this._tail = null
   }
 
-  insert( val){
-    this._length++
-    let node = new Node(val),
-    currentNode = this._head;
+  insertFirst(value){
+    let node = new Node(value)
+    let currentNode = this._head
 
-    //If empty, build as first node
     if(!currentNode){
-      this._head = node;
-      this._length++;
-      return;
+      this._head = node
+      this._length++
+
+      return node
     }
 
     while(currentNode.next){
-      currentNode = currentNode.next;
+      currentNode = currentNode.next
     }
 
-    currentNode.next = node;
+    currentNode.next = node
+    this._length++
 
-    return node;
+    return node
+
   }
 
   insertFirst(){
@@ -43,7 +43,7 @@ export default class LinkedList {
   }
 
   getTailNode(){
-    return this_.tail
+    return this._tail
   }
 
 }
