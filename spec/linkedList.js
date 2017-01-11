@@ -26,8 +26,9 @@ describe.only('LinkedList', () => {
       const list = new LinkedList()
 
       const insertedList = list.insert('A')
+      const resultList = insertedList.insertFirst('1')
 
-      expect(insertedList).to.have.property('data', 'A')
+      expect(resultList).to.have.property('next', 'A')
     })
   })
 

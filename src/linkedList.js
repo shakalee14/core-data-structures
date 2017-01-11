@@ -12,7 +12,7 @@ export default class LinkedList {
     this._head = null
   }
 
-  insertFirst(value){
+  insert(value){
     let node = new Node(value)
     let currentNode = this._head
 
