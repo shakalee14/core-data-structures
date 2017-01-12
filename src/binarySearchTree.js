@@ -4,6 +4,8 @@ function Node(value){
   this.value = value
   this.left = null
   this.right = null
+  this.parent = null
+  this.leftOrRight = "root"
 }
 
 export default class BinarySearchTree {
@@ -20,24 +22,20 @@ export default class BinarySearchTree {
     let returnValue = null
 
     const recursion = (node) => {
-      if(returnValue === null){
-        let testVal
-        if(node.left){
-          testVal = recursion(node.left)
-          if( testVal === value){
-            returnValue = node
-          }
+      if(node.value === value){
+        returnValue = node
+        return
+      }
+
+      if(node.left){
+        recursion(node.left)
+        if(returnValue !== null) {
+          return
         }
-        if(node.right){
-          testVal = recursion(node.right)
-          if( testVal === value){
-            returnValue = node
-          }
-        }
-        if(node.value === value){
-          returnValue = node
-        }
-        return node.value
+      }
+
+      if(node.right){
+        recursion(node.right)
       }
     }
     recursion(this.root)
@@ -45,29 +43,107 @@ export default class BinarySearchTree {
   }
 
   insert(value){
-    if(!this.root){
+    let preRoot = this.root
+
+    if(!preRoot){
       this.root = new Node(value)
+      return this.length++
     }
 
-    const recursion = (node) => {
-      if(node){
-        if(value > node){
-          let thing = recursion(node.right)
-          if( thing ){
-            node.right = thing
-          }
-        } else if (value <= node){
-          let thing = recursion(node.left)
-          if( thing ){
-            node.left = thing
-          }
+    let currentNode = preRoot
+    let newNode = new Node(value)
+
+    while(currentNode){
+      if(value < currentNode.value){
+        if(!currentNode.left){
+          currentNode.left = newNode
+          newNode.parent = currentNode
+          newNode.leftOrRight = "left"
+          break
+        } else {
+          currentNode = currentNode.left
         }
       } else {
-        node = new Node(value)
-        return node
+        if(!currentNode.right){
+          currentNode.right = newNode
+          newNode.parent = currentNode
+          newNode.leftOrRight = "right"
+          break
+        } else {
+          currentNode = currentNode.right
+        }
       }
     }
+    this.length++
+  }
 
-    recursion(this.root)
+  count(){
+    return this.length
+  }
+
+  remove(value){
+    if(!root){
+      return null
+    }
+
+    let currentNode = this.root
+
+    while(currentNode && currentNode.value !== value){
+      if(value < currentNode.value){
+        if(!currentNode.left){
+          break
+        } else {
+          currentNode = currentNode.left
+        }
+      } else {
+        if(!currentNode.right){
+          break
+        } else {
+          currentNode = currentNode.right
+        }
+      }
+    }
+    if(currentNode.value !== value){
+      return null
+    }
+
+    const seekDeleteNode = (initialDirection) => {
+      let oppositeDirection = initialDirection === 'left' ? 'right' : 'left'
+
+      let deleteMeNode = currentNode
+      currentNode = currentNode[initialDirection]
+      while(currentNode[oppositeDirection]){
+        currentNode = currentNode[oppositeDirection]
+      }
+      deleteMeNode.value = currentNode.value
+      currentNode.parent[currentNode.leftOrRight] = null
+    }
+
+    if(currentNode.right){
+      seekDeleteNode('right')
+    } else if(currentNode.left) {
+      seekDeleteNode('left')
+    } else {
+      currentNode.parent[currentNode.leftOrRight] = null
+    }
+    this.length--
+  }
+
+  traverse(callback, order='inOrder'){
+    if(!root){
+      return null
+    }
+
+    let currentNode = this.root
+
+    const recursion = (node) => {
+      if(order === 'preOrder') callback(node)
+      if(node.left) recursion(node.left)
+      if(order === 'inOrder') callback(node)
+      if(node.right) recursion(node.right)
+      if(order === 'postOrder') callback(node)
+    }
+
+    recursion(currentNode)
   }
 }
