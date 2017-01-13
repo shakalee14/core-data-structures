@@ -46,4 +46,5 @@ export default class Stack {
   isEmpty(){
     return this.lengthVal <= 0
   }
+
 }
