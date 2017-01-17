@@ -16,6 +16,12 @@ public class DoublyLinkedList {
       this.data = initData;
     }
 
+    public Node(String initData){
+      this.next = null;
+      this.prev = null;
+      this.data = initData;
+    }
+
     // Getters
     public Node getNext() {
       return this.next;
@@ -40,12 +46,11 @@ public class DoublyLinkedList {
   } // End of Node class
 
   public String insertNode(String data){
-    Node expo = new Node (null, null, data);
+    Node expo = new Node (data);
     Node currentNode = this.head;
 
     if(this.head == null){
       this.head = expo;
-      this.tail = expo;
       this.length++;
     } else {
       while( currentNode.next != null ){
@@ -53,9 +58,9 @@ public class DoublyLinkedList {
       }
       expo.prev = currentNode;
       currentNode.next = expo;
-      this.tail = expo;
       this.length++;
     }
+    this.tail = expo;
     return expo.getData();
   }
 
@@ -87,18 +92,14 @@ public class DoublyLinkedList {
     while( currentNode.next != null){
       if (currentNode.getData() == data){
         return true;
-      } 
+      }
       currentNode = currentNode.next;
     }
     return false;
   }
 
   public boolean isEmpty(){
-    if(this.head == null && this.tail == null){
-      return true;
-    } else {
-      return false;
-    }
+    return this.head == null && this.tail == null;
   }
 
   public String getHeadData(){
@@ -116,8 +117,10 @@ public class DoublyLinkedList {
   public void printAllNodes(){
     Node currentNode = this.head;
     while( currentNode.next != null){
+      System.out.println(currentNode.getData());
       currentNode = currentNode.next;
     }
+
   }
 
 }
