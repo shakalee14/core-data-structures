@@ -1,0 +1,12 @@
+{
+  "name": "java",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "javac DoublyLinkedList.java && javac -cp .:junit-4.12.jar DoublyLinkedListTest.java && java -cp .:junit-4.12.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore DoublyLinkedListTest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
